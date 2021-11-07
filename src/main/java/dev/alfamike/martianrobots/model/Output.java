@@ -24,7 +24,6 @@ public class Output {
 	private int yAxis;
 	
 	@Column
-	@Enumerated(EnumType.STRING)
 	private Orientation orientation;
 	
 	@Column

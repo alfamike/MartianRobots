@@ -33,7 +33,6 @@ public class Input {
 	private int initialCoordinateO;
 	
 	@Column(length=100)
-	@Enumerated(EnumType.STRING)
 	private Instruction [] movements;
 
 	public Long getId() {
