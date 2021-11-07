@@ -1,6 +1,5 @@
 package dev.alfamike.martianrobots.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,16 +16,13 @@ public class Output {
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Long id;
     
-	@Column
 	private int xAxis;
 	
-	@Column
 	private int yAxis;
 	
-	@Column
+	@Enumerated(EnumType.STRING)
 	private Orientation orientation;
 	
-	@Column
 	private String observation;
 
 	public Long getId() {

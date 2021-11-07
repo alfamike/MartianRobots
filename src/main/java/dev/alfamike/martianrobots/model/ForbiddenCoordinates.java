@@ -1,6 +1,5 @@
 package dev.alfamike.martianrobots.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,10 +12,8 @@ public class ForbiddenCoordinates {
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Long id;
     
-    @Column
     private int xAxis;
     
-    @Column
     private int yAxis;
 
 }
