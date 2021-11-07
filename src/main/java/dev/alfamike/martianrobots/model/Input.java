@@ -27,8 +27,8 @@ public class Input {
 	
 	private int initialCoordinateO;
 
-	@Enumerated(EnumType.STRING)
-	private Instruction [] movements;
+	@Column(length = 100)
+	private String movements;
 
 	public Long getId() {
 		return id;
@@ -78,11 +78,11 @@ public class Input {
 		this.initialCoordinateO = initialCoordinateO;
 	}
 
-	public Instruction[] getMovements() {
+	public String getMovements() {
 		return movements;
 	}
 
-	public void setMovements(Instruction[] movements) {
+	public void setMovements(String movements) {
 		this.movements = movements;
 	}
 	
