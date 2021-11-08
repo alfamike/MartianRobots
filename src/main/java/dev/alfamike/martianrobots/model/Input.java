@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import dev.alfamike.martianrobots.Instruction;
+import dev.alfamike.martianrobots.Orientation;
 
 @Entity
 public class Input {
@@ -25,7 +26,8 @@ public class Input {
 	
 	private int initialCoordinateY;
 	
-	private int initialCoordinateO;
+	@Enumerated(EnumType.STRING)
+	private Orientation initialCoordinateO;
 
 	@Column(length = 100)
 	private String movements;
@@ -70,14 +72,6 @@ public class Input {
 		this.initialCoordinateY = initialCoordinateY;
 	}
 
-	public int getInitialCoordinateO() {
-		return initialCoordinateO;
-	}
-
-	public void setInitialCoordinateO(int initialCoordinateO) {
-		this.initialCoordinateO = initialCoordinateO;
-	}
-
 	public String getMovements() {
 		return movements;
 	}
@@ -85,5 +79,14 @@ public class Input {
 	public void setMovements(String movements) {
 		this.movements = movements;
 	}
+
+	public Orientation getInitialCoordinateO() {
+		return initialCoordinateO;
+	}
+
+	public void setInitialCoordinateO(Orientation initialCoordinateO) {
+		this.initialCoordinateO = initialCoordinateO;
+	}
+	
 	
 }

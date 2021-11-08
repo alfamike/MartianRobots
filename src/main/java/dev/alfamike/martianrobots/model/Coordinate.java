@@ -1,21 +1,23 @@
 package dev.alfamike.martianrobots.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import dev.alfamike.martianrobots.Orientation;
 
-@Entity
+
 public class Coordinate {
-    @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    private Long id;
+	
     
-    private int xAxis;
+    public Coordinate(int xAxis, int yAxis, Orientation orientation) {
+		super();
+		this.xAxis = xAxis;
+		this.yAxis = yAxis;
+		this.orientation = orientation;
+	}
+
+	private int xAxis;
     
     private int yAxis;
     
-    private String orientation;
+    private Orientation orientation;
 
 	public int getxAxis() {
 		return xAxis;
@@ -33,16 +35,12 @@ public class Coordinate {
 		this.yAxis = yAxis;
 	}
 
-	public String getOrientation() {
+	public Orientation getOrientation() {
 		return orientation;
 	}
 
-	public void setOrientation(String orientation) {
+	public void setOrientation(Orientation orientation) {
 		this.orientation = orientation;
-	}
-
-	public Long getId() {
-		return id;
 	}
     
     
