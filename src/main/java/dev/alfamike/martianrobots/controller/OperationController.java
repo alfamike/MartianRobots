@@ -81,6 +81,9 @@ public class OperationController {
 				input.setGridX(xAxisGrid);
 				input.setGridY(yAxisGrid);
 				
+				// Save to ddbb
+				input = repoInput.save(input);
+				
 				//Print to cmd
 				System.out.println(xAxisGrid+"\t"+yAxisGrid);
 				message = "Grid for exploration established";
@@ -145,6 +148,9 @@ public class OperationController {
 			robot.setyPosition(yAxis);
 			robot.setOrientation(orientation);
 			
+			// Save to ddbb
+			robot = repoRobot.save(robot);
+			
 			//Print to cmd
 			System.out.println(xAxis+"\t"+yAxis+"\t"+orientation.toString());
 			
@@ -204,7 +210,7 @@ public class OperationController {
 			} else {
 				input.setMovements(movements);
 				//Save input object to ddbb
-				repoInput.save(input);
+				input = repoInput.save(input);
 				
 				
 				char [] movementsArray = movements.toCharArray();
@@ -233,7 +239,7 @@ public class OperationController {
 								robot.setOrientation(aux.getOrientation());
 								
 								//Save to ddbb
-								repoRobot.save(robot);
+								robot = repoRobot.save(robot);
 								message = aux.getxAxis()+"\t"+aux.getyAxis()+"\t"+aux.getOrientation().toString()+"\t"+"LOST";
 								System.out.println(message);
 								
@@ -254,6 +260,9 @@ public class OperationController {
 								robot.setyPosition(aux.getyAxis());
 								robot.setOrientation(aux.getOrientation());
 								
+								// Save to ddbb
+								robot = repoRobot.save(robot);
+								
 								//Log
 								LogMovements log2 = new LogMovements(robot.getId(), robot.getxPosition(), robot.getyPosition(), robot.getOrientation());
 								repoLog.save(log2);
@@ -269,12 +278,12 @@ public class OperationController {
 								robot.setOrientation(coResult.getOrientation());
 								
 								//Save to ddbb
-								repoRobot.save(robot);
+								robot = repoRobot.save(robot);
 								
 								//Log
 								LogMovements log = new LogMovements(robot.getId(), robot.getxPosition(), robot.getyPosition(), robot.getOrientation());
 								repoLog.save(log);
-								
+								// TODO
 								//Print to cmd
 								message = coResult.getxAxis()+"\t"+coResult.getyAxis()+"\t"+coResult.getOrientation().toString();
 								System.out.println(message);
