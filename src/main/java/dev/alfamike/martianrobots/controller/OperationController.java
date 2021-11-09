@@ -217,7 +217,7 @@ public class OperationController {
 					//Run movement
 					 coResult = i.run(aux);
 
-					 ForbiddenCoordinates fcoo = repoForbidden.findByxAxisAndyAxis(coResult.getxAxis(), coResult.getyAxis());
+					 ForbiddenCoordinates fcoo = repoForbidden.findByXAxisAndYAxis(coResult.getxAxis(), coResult.getyAxis());
 					 if (fcoo == null) {
 						// Out grid
 							if (coResult.getxAxis() > input.getGridX() || coResult.getyAxis() > input.getGridY()){

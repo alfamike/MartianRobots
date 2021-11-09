@@ -10,16 +10,40 @@ public class ForbiddenCoordinates {
 	
     public ForbiddenCoordinates(int xAxis, int yAxis) {
 		super();
-		this.xAxis = xAxis;
-		this.yAxis = yAxis;
+		this.XAxis = xAxis;
+		this.YAxis = yAxis;
 	}
 
 	@Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Long id;
     
-    private int xAxis;
+    private int XAxis;
     
-    private int yAxis;
+    private int YAxis;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public int getXAxis() {
+		return XAxis;
+	}
+
+	public void setXAxis(int xAxis) {
+		XAxis = xAxis;
+	}
+
+	public int getYAxis() {
+		return YAxis;
+	}
+
+	public void setYAxis(int yAxis) {
+		YAxis = yAxis;
+	}    
+    
 }
