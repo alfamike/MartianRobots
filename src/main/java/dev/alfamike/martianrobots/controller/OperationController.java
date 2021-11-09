@@ -21,9 +21,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.alfamike.martianrobots.Instruction;
 import dev.alfamike.martianrobots.Orientation;
 import dev.alfamike.martianrobots.model.Coordinate;
+import dev.alfamike.martianrobots.model.ForbiddenCoordinates;
 import dev.alfamike.martianrobots.model.Input;
+import dev.alfamike.martianrobots.model.LogMovements;
 import dev.alfamike.martianrobots.model.Robot;
+import dev.alfamike.martianrobots.repository.ForbiddenCoordinatesRepository;
 import dev.alfamike.martianrobots.repository.InputRepository;
+import dev.alfamike.martianrobots.repository.LogMovementsRepo;
 import dev.alfamike.martianrobots.repository.RobotRepository;
 
 /**
@@ -44,6 +48,12 @@ public class OperationController {
 	@Autowired
 	RobotRepository repoRobot;
 	
+	@Autowired
+	ForbiddenCoordinatesRepository repoForbidden;
+	
+	@Autowired
+	LogMovementsRepo repoLog;
+	
 	/**
 	 * 	@author Alvaro Menacho Rodriguez
 	 *  @param input json with grid value
@@ -60,19 +70,28 @@ public class OperationController {
 			JsonNode rjson = objectMapper.readTree(json);
 			int xAxisGrid = rjson.get("xAxisGrid").asInt();
 			int yAxisGrid = rjson.get("yAxisGrid").asInt();
-			
-			//Establish grid
-			grid = new String [xAxisGrid][yAxisGrid];
-			input.setGridX(xAxisGrid);
-			input.setGridY(yAxisGrid);
-			
+			String message = null;
+			if (xAxisGrid > 50 || yAxisGrid > 50) {
+				message = "Grid limit is 50";
+				status = HttpStatus.BAD_REQUEST;
+			} else {
+				//Establish grid
+				grid = new String [xAxisGrid][yAxisGrid];
+				input.setGridX(xAxisGrid);
+				input.setGridY(yAxisGrid);
+				
+				//Print to cmd
+				System.out.println(xAxisGrid+"\t"+yAxisGrid);
+				message = "Grid for exploration established";
+			}		
+
 			// Result json generation
 			JsonFactory factory = new JsonFactory();
 			StringWriter writer = new StringWriter();
 
 			JsonGenerator generator = factory.createGenerator(writer);
 			generator.writeStartObject();
-			generator.writeStringField("response", "Grid for exploration established");
+			generator.writeStringField("response", message);
 			generator.close();
 
 			resultJson = writer.toString();
@@ -124,6 +143,13 @@ public class OperationController {
 			robot.setyPosition(yAxis);
 			robot.setOrientation(orientation);
 			
+			//Print to cmd
+			System.out.println(xAxis+"\t"+yAxis+"\t"+orientation.toString());
+			
+			//Log
+			LogMovements log = new LogMovements(robot.getId(), robot.getxPosition(), robot.getyPosition(), robot.getOrientation());
+			repoLog.save(log);
+			
 			// Result json generation
 			JsonFactory factory = new JsonFactory();
 			StringWriter writer = new StringWriter();
@@ -163,7 +189,8 @@ public class OperationController {
 		String resultJson = null;
 		HttpStatus status = HttpStatus.OK;
 		String message = null;
-		
+		Coordinate coResult = null;
+		Coordinate aux = null;
 		try {
 			// Read json
 			JsonNode rjson = objectMapper.readTree(json);
@@ -173,7 +200,6 @@ public class OperationController {
 				status = HttpStatus.BAD_REQUEST;
 				message = "Too many movements. Try less than 100";
 			} else {
-				message = "Final position reached: ";
 				input.setMovements(movements);
 				//Save input object to ddbb
 				repoInput.save(input);
@@ -181,21 +207,83 @@ public class OperationController {
 				
 				char [] movementsArray = movements.toCharArray();
 				
+				
+				
 				for (char c : movementsArray) {
 					Instruction i = Instruction.valueOf(String.valueOf(c));
 					//Get actual robot position
-					Coordinate aux = new Coordinate(robot.getxPosition(), robot.getyPosition(), robot.getOrientation());
+					aux = new Coordinate(robot.getxPosition(), robot.getyPosition(), robot.getOrientation());
 					
 					//Run movement
-					Coordinate coResult = i.run(aux);
-					
-					//Update robot
-					robot.setxPosition(coResult.getxAxis());
-					robot.setyPosition(coResult.getyAxis());
-					robot.setOrientation(coResult.getOrientation());
-					
+					 coResult = i.run(aux);
+
+					 ForbiddenCoordinates fcoo = repoForbidden.findByxAxisAndyAxis(coResult.getxAxis(), coResult.getyAxis());
+					 if (fcoo == null) {
+						// Out grid
+							if (coResult.getxAxis() > input.getGridX() || coResult.getyAxis() > input.getGridY()){
+								
+								// Position in grid
+								grid[aux.getxAxis()][aux.getyAxis()] = "X";
+								
+								//Update robot with last position
+								robot.setxPosition(aux.getxAxis());
+								robot.setyPosition(aux.getyAxis());
+								robot.setOrientation(aux.getOrientation());
+								
+								//Save to ddbb
+								repoRobot.save(robot);
+								message = aux.getxAxis()+"\t"+aux.getyAxis()+"\t"+aux.getOrientation().toString()+"\t"+"LOST";
+								System.out.println(message);
+								
+								//Log
+								LogMovements log = new LogMovements(robot.getId(), robot.getxPosition(), robot.getyPosition(), robot.getOrientation());
+								repoLog.save(log);
+								
+								//Mark forbidden grid point
+								grid[aux.getxAxis()][aux.getyAxis()] = "L";
+								
+								// Save to ddbb forbidden grid point
+								ForbiddenCoordinates newFcoo= new ForbiddenCoordinates(aux.getxAxis(), aux.getyAxis());
+								repoForbidden.save(newFcoo);
+								
+								//New robot launches
+								robot = new Robot();
+								robot.setxPosition(aux.getxAxis());
+								robot.setyPosition(aux.getyAxis());
+								robot.setOrientation(aux.getOrientation());
+								
+								//Log
+								LogMovements log2 = new LogMovements(robot.getId(), robot.getxPosition(), robot.getyPosition(), robot.getOrientation());
+								repoLog.save(log2);
+								
+							} else {
+								
+								// Position in grid
+								grid[coResult.getxAxis()][coResult.getyAxis()] = "X";
+								
+								//Update robot
+								robot.setxPosition(coResult.getxAxis());
+								robot.setyPosition(coResult.getyAxis());
+								robot.setOrientation(coResult.getOrientation());
+								
+								//Save to ddbb
+								repoRobot.save(robot);
+								
+								//Log
+								LogMovements log = new LogMovements(robot.getId(), robot.getxPosition(), robot.getyPosition(), robot.getOrientation());
+								repoLog.save(log);
+								
+								//Print to cmd
+								message = coResult.getxAxis()+"\t"+coResult.getyAxis()+"\t"+coResult.getOrientation().toString();
+								System.out.println(message);
+							}
+					 } else {
+						 //Skip forbidden grid point
+					 }
 					
 				}
+				
+
 			}
 			
 			// Result json generation
