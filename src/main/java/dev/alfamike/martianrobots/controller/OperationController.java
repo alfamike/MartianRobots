@@ -39,8 +39,8 @@ import dev.alfamike.martianrobots.repository.RobotRepository;
 @RestController
 public class OperationController {
 	private String grid [][]= null; // X: robot path
-	Input input = new Input();
-	Robot robot = new Robot();
+	Input input = null;
+	Robot robot = null;
 	
 	@Autowired
 	InputRepository repoInput;
@@ -77,6 +77,7 @@ public class OperationController {
 			} else {
 				//Establish grid
 				grid = new String [xAxisGrid][yAxisGrid];
+				input = new Input();
 				input.setGridX(xAxisGrid);
 				input.setGridY(yAxisGrid);
 				
@@ -139,6 +140,7 @@ public class OperationController {
 			grid[xAxis][yAxis] = "X";
 			
 			// Configuring robot
+			robot = new Robot();
 			robot.setxPosition(xAxis);
 			robot.setyPosition(yAxis);
 			robot.setOrientation(orientation);
