@@ -8,7 +8,13 @@ import javax.persistence.Id;
 @Entity
 public class ForbiddenCoordinates {
 	
-    @Id
+    public ForbiddenCoordinates(int xAxis, int yAxis) {
+		super();
+		this.xAxis = xAxis;
+		this.yAxis = yAxis;
+	}
+
+	@Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Long id;
     
