@@ -22,6 +22,7 @@ public enum Instruction {
 			switch (co.getOrientation()) {
 			case N:
 				co.setyAxis(co.getyAxis() + 1);
+				break;
 			case S:
 				co.setyAxis(co.getyAxis() - 1);
 				break;
