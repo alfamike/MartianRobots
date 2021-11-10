@@ -203,6 +203,7 @@ public class OperationController {
 		String resultJson = null;
 		HttpStatus status = HttpStatus.OK;
 		String message = null;
+		String message2 = null;
 		Coordinate coResult = null;
 		Coordinate aux = null;
 		try {
@@ -247,6 +248,7 @@ public class OperationController {
 								//Save to ddbb
 								robot = repoRobot.save(robot);
 								message = aux.getxAxis()+"\t"+aux.getyAxis()+"\t"+aux.getOrientation().toString()+"\t"+"LOST";
+								message2 = aux.getxAxis()+" "+aux.getyAxis()+" "+aux.getOrientation().toString()+" "+"LOST";
 								System.out.println(message);
 								
 								// Save output
@@ -297,6 +299,7 @@ public class OperationController {
 								
 								//Print to cmd
 								message = coResult.getxAxis()+"\t"+coResult.getyAxis()+"\t"+coResult.getOrientation().toString();
+								message2 = coResult.getxAxis()+" "+coResult.getyAxis()+" "+coResult.getOrientation().toString();
 							}
 					 } else {
 						 //Skip forbidden grid point
@@ -317,7 +320,7 @@ public class OperationController {
 
 			JsonGenerator generator = factory.createGenerator(writer);
 			generator.writeStartObject();
-			generator.writeStringField("response", message);
+			generator.writeStringField("response", message2);
 			generator.close();
 
 			resultJson = writer.toString();
