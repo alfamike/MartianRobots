@@ -1,7 +1,7 @@
 package dev.alfamike.martianrobots;
 
 public enum Instruction {
-	l {
+	L {
 		@Override
 		public Coordinate run(Coordinate co) {
 			Orientation newOrientation = co.getOrientation().rotateLeft(co.getOrientation());
