@@ -1,7 +1,4 @@
-package dev.alfamike.martianrobots.model;
-
-import dev.alfamike.martianrobots.Orientation;
-
+package dev.alfamike.martianrobots;
 
 public class Coordinate {
 	

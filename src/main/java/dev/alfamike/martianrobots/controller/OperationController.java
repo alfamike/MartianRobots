@@ -18,9 +18,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dev.alfamike.martianrobots.Coordinate;
 import dev.alfamike.martianrobots.Instruction;
 import dev.alfamike.martianrobots.Orientation;
-import dev.alfamike.martianrobots.model.Coordinate;
 import dev.alfamike.martianrobots.model.ForbiddenCoordinates;
 import dev.alfamike.martianrobots.model.Input;
 import dev.alfamike.martianrobots.model.LogMovements;
@@ -143,6 +143,7 @@ public class OperationController {
 			input.setInitialCoordinateX(xAxis);
 			input.setInitialCoordinateY(yAxis);
 			input.setInitialCoordinateO(orientation);
+			input = repoInput.save(input);
 			
 			// Position in grid
 			grid[xAxis][yAxis] = "X";
