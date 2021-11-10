@@ -12,7 +12,15 @@ import dev.alfamike.martianrobots.Orientation;
 @Entity
 public class Output {
 	
-    @Id
+    public Output(int xAxis, int yAxis, Orientation orientation, String observation) {
+		super();
+		this.xAxis = xAxis;
+		this.yAxis = yAxis;
+		this.orientation = orientation;
+		this.observation = observation;
+	}
+
+	@Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Long id;
     
