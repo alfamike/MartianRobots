@@ -1,7 +1,5 @@
 package dev.alfamike.martianrobots;
 
-import dev.alfamike.martianrobots.model.Coordinate;
-
 public enum Instruction {
 	l {
 		@Override
