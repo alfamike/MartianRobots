@@ -221,6 +221,8 @@ public class OperationController {
 		String message2 = null;
 		Coordinate coResult = null;
 		Coordinate aux = null;
+		Coordinate aux2 = null;
+		
 		try {
 			// Read json
 			JsonNode rjson = objectMapper.readTree(json);
@@ -240,9 +242,9 @@ public class OperationController {
 					Instruction i = Instruction.valueOf(String.valueOf(c));
 					// Get actual robot position
 					aux = new Coordinate(robot.getxPosition(), robot.getyPosition(), robot.getOrientation());
-
+					aux2 = new Coordinate(robot.getxPosition(), robot.getyPosition(), robot.getOrientation());
 					// Run movement
-					coResult = i.run(aux);
+					coResult = i.run(aux2);
 
 					ForbiddenCoordinates fcoo = repoForbidden.findByXAxisAndYAxis(coResult.getxAxis(),
 							coResult.getyAxis());
