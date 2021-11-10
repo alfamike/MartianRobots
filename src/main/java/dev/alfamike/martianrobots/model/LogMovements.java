@@ -11,8 +11,7 @@ import dev.alfamike.martianrobots.Orientation;
 
 @Entity
 public class LogMovements {
-	
-	
+
 	public LogMovements(Long robot, int xAxis, int yAxis, Orientation orientation) {
 		super();
 		this.robot = robot;
@@ -22,15 +21,15 @@ public class LogMovements {
 	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-	
+
 	private Long robot;
-	
+
 	private int xAxis;
-	
+
 	private int yAxis;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Orientation orientation;
 

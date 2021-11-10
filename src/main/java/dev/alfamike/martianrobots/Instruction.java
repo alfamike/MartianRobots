@@ -8,17 +8,19 @@ public enum Instruction {
 			co.setOrientation(newOrientation);
 			return co;
 		}
-	},R {
+	},
+	R {
 		@Override
 		public Coordinate run(Coordinate co) {
 			Orientation newOrientation = co.getOrientation().rotateRight(co.getOrientation());
 			co.setOrientation(newOrientation);
 			return co;
 		}
-	},F {
+	},
+	F {
 		@Override
 		public Coordinate run(Coordinate co) {
-			
+
 			switch (co.getOrientation()) {
 			case N:
 				co.setyAxis(co.getyAxis() + 1);
@@ -32,14 +34,14 @@ public enum Instruction {
 			case W:
 				co.setxAxis(co.getxAxis() - 1);
 				break;
-				
+
 			default:
 				break;
 			}
 			return co;
 		}
 	};
-	
+
 	// abstract method
-    public abstract Coordinate run(Coordinate co);
+	public abstract Coordinate run(Coordinate co);
 }

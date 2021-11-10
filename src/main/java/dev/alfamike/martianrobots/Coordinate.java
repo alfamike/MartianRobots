@@ -1,9 +1,8 @@
 package dev.alfamike.martianrobots;
 
 public class Coordinate {
-	
-    
-    public Coordinate(int xAxis, int yAxis, Orientation orientation) {
+
+	public Coordinate(int xAxis, int yAxis, Orientation orientation) {
 		super();
 		this.xAxis = xAxis;
 		this.yAxis = yAxis;
@@ -11,10 +10,10 @@ public class Coordinate {
 	}
 
 	private int xAxis;
-    
-    private int yAxis;
-    
-    private Orientation orientation;
+
+	private int yAxis;
+
+	private Orientation orientation;
 
 	public int getxAxis() {
 		return xAxis;
@@ -39,6 +38,5 @@ public class Coordinate {
 	public void setOrientation(Orientation orientation) {
 		this.orientation = orientation;
 	}
-    
-    
+
 }

@@ -16,7 +16,7 @@ public class MartianRobotsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MartianRobotsApplication.class, args);
 	}
-	
+
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder.build();

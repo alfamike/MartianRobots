@@ -11,19 +11,19 @@ import dev.alfamike.martianrobots.Orientation;
 
 @Entity
 public class Robot {
-	
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
-    
-    private boolean active = true;
-    
-    private int xPosition;
-    
-    private int yPosition;
-    
-    @Enumerated(EnumType.STRING)
-    private Orientation orientation;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	private boolean active = true;
+
+	private int xPosition;
+
+	private int yPosition;
+
+	@Enumerated(EnumType.STRING)
+	private Orientation orientation;
 
 	public Long getId() {
 		return id;
@@ -64,5 +64,5 @@ public class Robot {
 	public void setOrientation(Orientation orientation) {
 		this.orientation = orientation;
 	}
-    
+
 }

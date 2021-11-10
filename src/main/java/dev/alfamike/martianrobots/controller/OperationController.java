@@ -222,7 +222,7 @@ public class OperationController {
 		Coordinate coResult = null;
 		Coordinate aux = null;
 		Coordinate aux2 = null;
-		
+
 		try {
 			// Read json
 			JsonNode rjson = objectMapper.readTree(json);
@@ -250,8 +250,8 @@ public class OperationController {
 							coResult.getyAxis());
 					if (fcoo == null) {
 						// Out grid
-						System.out.println(coResult.getxAxis() + " " + input.getGridX() + " " + coResult.getxAxis() + " " +
-								coResult.getyAxis() + " " + input.getGridY() + " "+ coResult.getyAxis());
+						System.out.println(coResult.getxAxis() + " " + input.getGridX() + " " + coResult.getxAxis()
+								+ " " + coResult.getyAxis() + " " + input.getGridY() + " " + coResult.getyAxis());
 						if (coResult.getxAxis() > input.getGridX() - 1 || coResult.getxAxis() < 0
 								|| coResult.getyAxis() > input.getGridY() - 1 || coResult.getyAxis() < 0) {
 
@@ -265,7 +265,7 @@ public class OperationController {
 							robot.setyPosition(aux.getyAxis());
 							robot.setOrientation(aux.getOrientation());
 							robot.setActive(false);
-							
+
 							// Save to ddbb
 							robot = repoRobot.save(robot);
 							message = aux.getxAxis() + "\t" + aux.getyAxis() + "\t" + aux.getOrientation().toString()

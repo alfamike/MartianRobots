@@ -8,24 +8,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import dev.alfamike.martianrobots.Instruction;
 import dev.alfamike.martianrobots.Orientation;
 
 @Entity
 public class Input {
-	
-    @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    private Long id;
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Long id;
+
 	private int gridX;
-	
+
 	private int gridY;
-	
+
 	private int initialCoordinateX;
-	
+
 	private int initialCoordinateY;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Orientation initialCoordinateO;
 
@@ -87,6 +86,5 @@ public class Input {
 	public void setInitialCoordinateO(Orientation initialCoordinateO) {
 		this.initialCoordinateO = initialCoordinateO;
 	}
-	
-	
+
 }

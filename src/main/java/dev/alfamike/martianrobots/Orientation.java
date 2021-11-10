@@ -11,7 +11,8 @@ public enum Orientation {
 		public Orientation rotateRight(Orientation input) {
 			return Orientation.E;
 		}
-	},S {
+	},
+	S {
 		@Override
 		public Orientation rotateLeft(Orientation input) {
 			return Orientation.E;
@@ -21,7 +22,8 @@ public enum Orientation {
 		public Orientation rotateRight(Orientation input) {
 			return Orientation.W;
 		}
-	},E {
+	},
+	E {
 		@Override
 		public Orientation rotateLeft(Orientation input) {
 			return Orientation.N;
@@ -31,7 +33,8 @@ public enum Orientation {
 		public Orientation rotateRight(Orientation input) {
 			return Orientation.S;
 		}
-	},W {
+	},
+	W {
 		@Override
 		public Orientation rotateLeft(Orientation input) {
 			return Orientation.S;
@@ -42,7 +45,8 @@ public enum Orientation {
 			return Orientation.N;
 		}
 	};
-	
+
 	public abstract Orientation rotateLeft(Orientation input);
+
 	public abstract Orientation rotateRight(Orientation input);
 }
