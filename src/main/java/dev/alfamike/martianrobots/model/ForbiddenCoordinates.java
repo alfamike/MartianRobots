@@ -1,31 +1,26 @@
 package dev.alfamike.martianrobots.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+
+import dev.alfamike.martianrobots.ForbiddenCoordinatesId;
 
 @Entity
-public class ForbiddenCoordinates implements Serializable{
-	
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+@IdClass(ForbiddenCoordinatesId.class)
+public class ForbiddenCoordinates {
 
 	public ForbiddenCoordinates(int xAxis, int yAxis) {
 		super();
 		this.XAxis = xAxis;
 		this.YAxis = yAxis;
 	}
-    
+
 	@Id
-    private int XAxis;
-    
+	private int XAxis;
+
 	@Id
-    private int YAxis;
+	private int YAxis;
 
 	public int getXAxis() {
 		return XAxis;
@@ -41,6 +36,6 @@ public class ForbiddenCoordinates implements Serializable{
 
 	public void setYAxis(int yAxis) {
 		YAxis = yAxis;
-	}    
-    
+	}
+
 }
