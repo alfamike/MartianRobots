@@ -139,11 +139,24 @@ public class OperationController {
 			int yAxis = rjson.get("yAxisInitial").asInt();
 			Orientation orientation = Orientation.valueOf(rjson.get("orientationInitial").asText());
 			
-			// Setting input
-			input.setInitialCoordinateX(xAxis);
-			input.setInitialCoordinateY(yAxis);
-			input.setInitialCoordinateO(orientation);
-			input = repoInput.save(input);
+			// Setting input. First input or not
+			// In the first input orientation is null
+			if (input.getInitialCoordinateO() != null) {
+				Input newInput = new Input();
+				newInput.setInitialCoordinateX(xAxis);
+				newInput.setInitialCoordinateY(yAxis);
+				newInput.setInitialCoordinateO(orientation);
+				newInput.setGridX(input.getGridX());
+				newInput.setGridY(input.getGridY());
+				
+				// save to ddbb
+				input = repoInput.save(newInput);
+			}else {
+				input.setInitialCoordinateX(xAxis);
+				input.setInitialCoordinateY(yAxis);
+				input.setInitialCoordinateO(orientation);
+				input = repoInput.save(input);
+			}
 			
 			// Position in grid
 			grid[xAxis][yAxis] = "X";
