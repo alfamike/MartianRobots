@@ -24,10 +24,12 @@ import dev.alfamike.martianrobots.model.Coordinate;
 import dev.alfamike.martianrobots.model.ForbiddenCoordinates;
 import dev.alfamike.martianrobots.model.Input;
 import dev.alfamike.martianrobots.model.LogMovements;
+import dev.alfamike.martianrobots.model.Output;
 import dev.alfamike.martianrobots.model.Robot;
 import dev.alfamike.martianrobots.repository.ForbiddenCoordinatesRepository;
 import dev.alfamike.martianrobots.repository.InputRepository;
 import dev.alfamike.martianrobots.repository.LogMovementsRepo;
+import dev.alfamike.martianrobots.repository.OutputRepository;
 import dev.alfamike.martianrobots.repository.RobotRepository;
 
 /**
@@ -53,6 +55,9 @@ public class OperationController {
 	
 	@Autowired
 	LogMovementsRepo repoLog;
+	
+	@Autowired
+	OutputRepository repoOutput;
 	
 	/**
 	 * 	@author Alvaro Menacho Rodriguez
@@ -243,6 +248,10 @@ public class OperationController {
 								message = aux.getxAxis()+"\t"+aux.getyAxis()+"\t"+aux.getOrientation().toString()+"\t"+"LOST";
 								System.out.println(message);
 								
+								// Save output
+								Output out = new Output(aux.getxAxis(), aux.getyAxis(), aux.getOrientation(), "LOST");
+								repoOutput.save(out);
+								
 								//Log
 								LogMovements log = new LogMovements(robot.getId(), robot.getxPosition(), robot.getyPosition(), robot.getOrientation());
 								repoLog.save(log);
@@ -267,6 +276,7 @@ public class OperationController {
 								LogMovements log2 = new LogMovements(robot.getId(), robot.getxPosition(), robot.getyPosition(), robot.getOrientation());
 								repoLog.save(log2);
 								
+								
 							} else {
 								
 								// Position in grid
@@ -283,10 +293,9 @@ public class OperationController {
 								//Log
 								LogMovements log = new LogMovements(robot.getId(), robot.getxPosition(), robot.getyPosition(), robot.getOrientation());
 								repoLog.save(log);
-								// TODO
+								
 								//Print to cmd
 								message = coResult.getxAxis()+"\t"+coResult.getyAxis()+"\t"+coResult.getOrientation().toString();
-								System.out.println(message);
 							}
 					 } else {
 						 //Skip forbidden grid point
@@ -294,7 +303,11 @@ public class OperationController {
 					
 				}
 				
-
+				// Save output
+				Output out = new Output(aux.getxAxis(), aux.getyAxis(), aux.getOrientation(), null);
+				repoOutput.save(out);
+				
+				System.out.println(message);
 			}
 			
 			// Result json generation
