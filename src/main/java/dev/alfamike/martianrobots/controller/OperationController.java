@@ -74,9 +74,8 @@ public class OperationController {
 			// Read json
 			JsonNode rjson = objectMapper.readTree(json);
 
-			// To fit the grid example where length do not fit indexes. Sum 1
-			int xAxisGrid = rjson.get("xAxisGrid").asInt() + 1;
-			int yAxisGrid = rjson.get("yAxisGrid").asInt() + 1;
+			int xAxisGrid = rjson.get("xAxisGrid").asInt();
+			int yAxisGrid = rjson.get("yAxisGrid").asInt();
 			String message = null;
 			if (xAxisGrid > 50 || yAxisGrid > 50) {
 				message = "Grid limit is 50";
