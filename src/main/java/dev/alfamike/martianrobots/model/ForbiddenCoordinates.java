@@ -13,22 +13,12 @@ public class ForbiddenCoordinates {
 		this.XAxis = xAxis;
 		this.YAxis = yAxis;
 	}
-
-	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
     
+	@Id
     private int XAxis;
     
+	@Id
     private int YAxis;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public int getXAxis() {
 		return XAxis;
