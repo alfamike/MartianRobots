@@ -248,8 +248,8 @@ public class OperationController {
 							coResult.getyAxis());
 					if (fcoo == null) {
 						// Out grid
-						if (coResult.getxAxis() > input.getGridX() || coResult.getxAxis() < 0
-								|| coResult.getyAxis() > input.getGridY() || coResult.getyAxis() < 0) {
+						if (coResult.getxAxis() > input.getGridX() - 1 || coResult.getxAxis() < 0
+								|| coResult.getyAxis() > input.getGridY() - 1 || coResult.getyAxis() < 0) {
 
 							// Position in grid
 							grid[aux.getxAxis()][aux.getyAxis()] = "X";
