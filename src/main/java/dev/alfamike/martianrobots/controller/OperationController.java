@@ -248,17 +248,22 @@ public class OperationController {
 							coResult.getyAxis());
 					if (fcoo == null) {
 						// Out grid
+						System.out.println(coResult.getxAxis() + " " + input.getGridX() + " " + coResult.getxAxis() + " " +
+								coResult.getyAxis() + " " + input.getGridY() + " "+ coResult.getyAxis());
 						if (coResult.getxAxis() > input.getGridX() - 1 || coResult.getxAxis() < 0
 								|| coResult.getyAxis() > input.getGridY() - 1 || coResult.getyAxis() < 0) {
 
 							// Position in grid
+							System.out.println(grid.length);
+							System.out.println(aux.getxAxis() + " " + aux.getyAxis());
 							grid[aux.getxAxis()][aux.getyAxis()] = "X";
 
 							// Update robot with last position
 							robot.setxPosition(aux.getxAxis());
 							robot.setyPosition(aux.getyAxis());
 							robot.setOrientation(aux.getOrientation());
-
+							robot.setActive(false);
+							
 							// Save to ddbb
 							robot = repoRobot.save(robot);
 							message = aux.getxAxis() + "\t" + aux.getyAxis() + "\t" + aux.getOrientation().toString()
