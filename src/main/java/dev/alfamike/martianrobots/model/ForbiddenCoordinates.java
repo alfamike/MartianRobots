@@ -15,6 +15,10 @@ public class ForbiddenCoordinates {
 		this.XAxis = xAxis;
 		this.YAxis = yAxis;
 	}
+	
+	public ForbiddenCoordinates() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Id
 	private int XAxis;
