@@ -139,56 +139,73 @@ public class OperationController {
 			int xAxis = rjson.get("xAxisInitial").asInt();
 			int yAxis = rjson.get("yAxisInitial").asInt();
 			Orientation orientation = Orientation.valueOf(rjson.get("orientationInitial").asText());
+			
+			if (xAxis > input.getGridX() - 1 || yAxis > input.getGridY() - 1) {
+				// Print to cmd
+				System.out.println("Invalid initial position");
+				
+				// Result json generation
+				JsonFactory factory = new JsonFactory();
+				StringWriter writer = new StringWriter();
 
-			// Setting input. First input or not
-			// In the first input orientation is null
-			if (input.getInitialCoordinateO() != null) {
-				Input newInput = new Input();
-				newInput.setInitialCoordinateX(xAxis);
-				newInput.setInitialCoordinateY(yAxis);
-				newInput.setInitialCoordinateO(orientation);
-				newInput.setGridX(input.getGridX());
-				newInput.setGridY(input.getGridY());
+				JsonGenerator generator = factory.createGenerator(writer);
+				generator.writeStartObject();
+				generator.writeStringField("response", "Invalid initial position");
+				generator.close();
 
-				// save to ddbb
-				input = repoInput.save(newInput);
+				resultJson = writer.toString();
 			} else {
-				input.setInitialCoordinateX(xAxis);
-				input.setInitialCoordinateY(yAxis);
-				input.setInitialCoordinateO(orientation);
-				input = repoInput.save(input);
+				// Setting input. First input or not
+				// In the first input orientation is null
+				if (input.getInitialCoordinateO() != null) {
+					Input newInput = new Input();
+					newInput.setInitialCoordinateX(xAxis);
+					newInput.setInitialCoordinateY(yAxis);
+					newInput.setInitialCoordinateO(orientation);
+					newInput.setGridX(input.getGridX());
+					newInput.setGridY(input.getGridY());
+
+					// save to ddbb
+					input = repoInput.save(newInput);
+				} else {
+					input.setInitialCoordinateX(xAxis);
+					input.setInitialCoordinateY(yAxis);
+					input.setInitialCoordinateO(orientation);
+					input = repoInput.save(input);
+				}
+
+				// Position in grid
+				grid[xAxis][yAxis] = "X";
+
+				// Configuring robot
+				robot = new Robot();
+				robot.setxPosition(xAxis);
+				robot.setyPosition(yAxis);
+				robot.setOrientation(orientation);
+
+				// Save to ddbb
+				robot = repoRobot.save(robot);
+
+				// Print to cmd
+				System.out.println(xAxis + "\t" + yAxis + "\t" + orientation.toString());
+
+				// Log
+				LogMovements log = new LogMovements(robot.getId(), robot.getxPosition(), robot.getyPosition(),
+						robot.getOrientation());
+				repoLog.save(log);
+
+				// Result json generation
+				JsonFactory factory = new JsonFactory();
+				StringWriter writer = new StringWriter();
+
+				JsonGenerator generator = factory.createGenerator(writer);
+				generator.writeStartObject();
+				generator.writeStringField("response", "Initial position established");
+				generator.close();
+
+				resultJson = writer.toString();
 			}
-
-			// Position in grid
-			grid[xAxis][yAxis] = "X";
-
-			// Configuring robot
-			robot = new Robot();
-			robot.setxPosition(xAxis);
-			robot.setyPosition(yAxis);
-			robot.setOrientation(orientation);
-
-			// Save to ddbb
-			robot = repoRobot.save(robot);
-
-			// Print to cmd
-			System.out.println(xAxis + "\t" + yAxis + "\t" + orientation.toString());
-
-			// Log
-			LogMovements log = new LogMovements(robot.getId(), robot.getxPosition(), robot.getyPosition(),
-					robot.getOrientation());
-			repoLog.save(log);
-
-			// Result json generation
-			JsonFactory factory = new JsonFactory();
-			StringWriter writer = new StringWriter();
-
-			JsonGenerator generator = factory.createGenerator(writer);
-			generator.writeStartObject();
-			generator.writeStringField("response", "Initial position established");
-			generator.close();
-
-			resultJson = writer.toString();
+			
 
 		} catch (JsonMappingException e) {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
