@@ -11,13 +11,13 @@ import dev.alfamike.martianrobots.ForbiddenCoordinatesId;
 public class ForbiddenCoordinates {
 
 	public ForbiddenCoordinates(int xAxis, int yAxis) {
-		super();
 		this.XAxis = xAxis;
 		this.YAxis = yAxis;
 	}
 	
 	public ForbiddenCoordinates() {
 		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	@Id
